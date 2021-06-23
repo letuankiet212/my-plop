@@ -1,0 +1,23 @@
+@if $use-helper-grid == true {
+    .{{grid_name}} {
+        grid-template-rows: {{grid_value}};
+    }
+
+    @include max_devices($lg){
+        .lg\:{{grid_name}} {
+            grid-template-rows: {{grid_value}};
+        }
+    }
+
+    @include max_devices($md){
+        .md\:{{grid_name}} {
+            grid-template-rows: {{grid_value}};
+        }
+    }
+
+    @include max_devices($sm){
+        .sm\:{{grid_name}} {
+            grid-template-rows: {{grid_value}};
+        }
+    }
+}
