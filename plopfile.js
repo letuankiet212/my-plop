@@ -1,12 +1,29 @@
+const promptDirectory = require('inquirer-directory');
+
 let list_prompts_general = {
     'select_project': {
-        type: "input",
-        name: "select_project",
-        message: "Chọn Thư Mục(Hãy ghi lại vị trí folder để chạy các câu lệnh sau) : ",
+        type: "directory",
+        name: 'select_project',
+        message: 'Chọn Thư Mục(Hãy ghi lại vị trí folder để chạy các câu lệnh sau) :',
+        basePath: './..'
     },
 };
 
 module.exports = function (plop) {
+    plop.setPrompt('directory', promptDirectory);
+
+	plop.setGenerator('test', {
+        description: "Tạo môi trường auto",
+        prompts: [
+            list_prompts_general.select_project,
+        ],
+        actions:[
+            {
+                type: 'add',
+                path: `{{select_project}}/khoi2.txt`,
+            }
+        ]
+    });
     plop.setGenerator('Tạo môi trường auto', {
         description: "Tạo môi trường auto",
         prompts: [
@@ -80,7 +97,7 @@ module.exports = function (plop) {
                 type: "append",
                 path: `{{${list_prompts_general.select_project.name}}}/assets/scss/setting/variables.scss`,
                 pattern: `//PLOP_COMMENT`,
-                template: `$color-base-text:: #{{name}};`,
+                template: `$color-base-text: #{{color}};`,
             }
         ]
     })
@@ -99,7 +116,7 @@ module.exports = function (plop) {
             type: "append",
             path: `{{${list_prompts_general.select_project.name}}}/assets/scss/setting/variables.scss`,
             pattern: `//PLOP_COMMENT`,
-            template: `$color-base-background: #{{name}};`,
+            template: `$color-base-background: #{{color}};`,
         }]
     })
     //Câu Lệnh Container
